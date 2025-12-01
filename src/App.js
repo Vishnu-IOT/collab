@@ -3,7 +3,7 @@ import Duration from './components/duration';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Duration />
     </div>
   );

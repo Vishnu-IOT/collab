@@ -1,0 +1,542 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    /* Light celestial background: Soft clouds/sky feel */
+    background-image: url("../assets/68.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background:
+        radial-gradient(circle at 20% 20%, rgba(255, 223, 186, 0.4), transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(135, 206, 235, 0.2), transparent 40%),
+        linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+    color: #2c3e50;
+    /* Dark text for light background */
+}
+
+/* Zodiac symbols floating in background - Darker for visibility */
+.main::before {
+    content: '♈ ♉ ♊ ♋ ♌ ♍ ♎ ♏ ♐ ♑ ♒ ♓';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 60px;
+    color: rgba(184, 134, 11, 0.15);
+    /* Dark Goldenrod with low opacity */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 80px;
+    padding: 40px;
+    letter-spacing: 40px;
+    animation: floatZodiac 40s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes floatZodiac {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.15;
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+        opacity: 0.2;
+    }
+}
+
+/* Sun/Star effect for light theme */
+.main::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20% 30%, #b8860b, transparent),
+        radial-gradient(2px 2px at 60% 70%, #b8860b, transparent),
+        radial-gradient(1px 1px at 50% 50%, #b8860b, transparent),
+        radial-gradient(3px 3px at 80% 10%, rgba(255, 165, 0, 0.4), transparent),
+        radial-gradient(2px 2px at 90% 60%, #b8860b, transparent),
+        radial-gradient(1px 1px at 33% 80%, #b8860b, transparent),
+        radial-gradient(4px 4px at 15% 55%, rgba(255, 215, 0, 0.3), transparent);
+    background-size: 200% 200%;
+    background-position: 0% 0%;
+    opacity: 0.6;
+    animation: twinkle 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Glassmorphism for light theme */
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 50px 45px;
+    border-radius: 30px;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    max-width: 700px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    animation: formAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Golden Glow Border Effect */
+.form::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(0deg,rgb(98, 223, 211) 0%, rgb(201, 119, 56) 100%);
+    border-radius: 30px;
+    z-index: -1;
+    opacity: 0.8;
+    filter: blur(8px);
+    background-size: 200% 200%;
+    animation: sunGlow 8s ease infinite;
+}
+
+@keyframes sunGlow {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes formAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.form h1 {
+    margin: 0 0 30px 0;
+    font-size: 38px;
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
+    /* Golden/Bronze Gradient Text */
+    background: linear-gradient(27deg,rgba(255, 191, 12, 1) 0%, rgba(254, 118, 12, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    letter-spacing: 2px;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.form h1::after {
+    content: '☀ ☀ ☀';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #d4af37;
+    letter-spacing: 12px;
+}
+
+/* Label Styling */
+.form label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #302f2f;
+    margin-bottom: -10px;
+    /* Pull closer to input */
+    margin-top: 5px;
+    text-align: left;
+    display: block;
+}
+
+.design {
+    width: 100%;
+    height: 52px;
+    padding: 0 20px;
+    border: 2px solid rgba(184, 134, 11, 0.2);
+    border-radius: 15px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.8);
+    color: #2c3e50;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.design:hover {
+    border-color: rgba(184, 134, 11, 0.5);
+    background: #ffffff;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+}
+
+.design:focus {
+    border-color: #d4af37;
+    background: #ffffff;
+    box-shadow:
+        0 0 0 4px rgba(212, 175, 55, 0.1),
+        0 4px 20px rgba(212, 175, 55, 0.2);
+    transform: translateY(-2px);
+}
+
+.design::placeholder {
+    color: #95a5a6;
+}
+
+.design option {
+    background: #ffffff;
+    color: #2c3e50;
+    padding: 12px;
+}
+
+/* File upload folder style */
+.design[type="file"] {
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 120px;
+    border: 2px dashed rgba(184, 134, 11, 0.4);
+    background: rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+}
+
+.design[type="file"]::before {
+    content: '📁';
+    position: absolute;
+    font-size: 48px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.design[type="file"]::after {
+    content: 'Click to Upload Image';
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: #8a6d3b;
+    font-weight: 600;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.design[type="file"]:hover {
+    border-color: #d4af37;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.design[type="file"]:hover::before {
+    transform: translate(-50%, -50%) scale(1.1);
+    transition: all 0.3s ease;
+}
+
+.design[type="file"]::file-selector-button {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+/* File upload wrapper and filename display */
+.file-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.file-name-display {
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 12px;
+    color: #8a6d3b;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+    word-break: break-all;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tadesign {
+    width: 100%;
+    min-height: 140px;
+    padding: 18px 20px;
+    border: 2px solid rgba(184, 134, 11, 0.2);
+    border-radius: 15px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.8);
+    color: #2c3e50;
+    resize: vertical;
+    transition: all 0.3s ease;
+    outline: none;
+    line-height: 1.6;
+}
+
+.tadesign:hover {
+    border-color: rgba(184, 134, 11, 0.5);
+    background: #ffffff;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+}
+
+.tadesign:focus {
+    border-color: #d4af37;
+    background: #ffffff;
+    box-shadow:
+        0 0 0 4px rgba(212, 175, 55, 0.1),
+        0 4px 20px rgba(212, 175, 55, 0.2);
+    transform: translateY(-2px);
+}
+
+.tadesign::placeholder {
+    color: #95a5a6;
+}
+
+.btn {
+    width: 100%;
+    height: 56px;
+    border: none;
+    border-radius: 15px;
+    /* Golden Gradient Button */
+    background: linear-gradient(135deg, #d4af37 0%, #fdb931 50%, #d4af37 100%);
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 10px 20px rgba(212, 175, 55, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    margin-top: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 15px 30px rgba(212, 175, 55, 0.4),
+        0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.btn:active {
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 20px rgba(212, 175, 55, 0.3);
+}
+
+.custom-week-picker {
+    width: 100%;
+}
+
+.custom-week-picker .ant-picker {
+    width: 100%;
+    height: 52px;
+    border-radius: 15px;
+    border: 2px solid rgba(184, 134, 11, 0.2);
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.custom-week-picker .ant-picker:hover {
+    border-color: rgba(184, 134, 11, 0.5);
+    background: #ffffff;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+}
+
+.custom-week-picker .ant-picker-focused {
+    border-color: #d4af37;
+    box-shadow:
+        0 0 0 4px rgba(212, 175, 55, 0.1),
+        0 4px 20px rgba(212, 175, 55, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .main {
+        padding: 20px 15px;
+    }
+
+    .main::before {
+        font-size: 40px;
+        letter-spacing: 20px;
+        gap: 40px;
+    }
+
+    .form {
+        padding: 35px 25px;
+        gap: 16px;
+    }
+
+    .form h1 {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    .design,
+    .tadesign {
+        font-size: 14px;
+    }
+
+    .design:not([type="file"]) {
+        height: 48px;
+    }
+
+    .tadesign {
+        min-height: 120px;
+    }
+
+    .btn {
+        height: 52px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main::before {
+        font-size: 30px;
+        letter-spacing: 15px;
+        gap: 30px;
+    }
+
+    .form h1 {
+        font-size: 26px;
+        letter-spacing: 1px;
+    }
+
+    .form {
+        padding: 30px 20px;
+    }
+}
+
+/* Material UI Calendar Overrides - Remove default blue design and match theme */
+.MuiFormControl-root {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+}
+
+.MuiOutlinedInput-root {
+    border-radius: 15px !important;
+    font-family: 'Poppins', sans-serif !important;
+    color: #2c3e50 !important;
+    transition: all 0.3s ease !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+    border-color: rgba(184, 134, 11, 0.2) !important;
+    border-width: 2px !important;
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: rgba(184, 134, 11, 0.5) !important;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+}
+
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #d4af37 !important;
+    box-shadow:
+        0 0 0 4px rgba(212, 175, 55, 0.1),
+        0 4px 20px rgba(212, 175, 55, 0.2);
+}
+
+.MuiInputLabel-root {
+    color: #8a6d3b !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+    color: #d4af37 !important;
+}
+
+.MuiSvgIcon-root {
+    color: #b8860b !important;
+}
