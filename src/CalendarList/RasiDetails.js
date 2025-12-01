@@ -13,9 +13,9 @@ export default function ViewRasiForm() {
   const initialDuration = params.get("duration") || "daily";
 
 
-  const today = new Date().toISOString().split("T")[0]; 
+  const today = new Date().toISOString().split("T")[0];
   console.log("Today:", today);
-  
+
   const [duration, setDuration] = useState(initialDuration);
 
 
@@ -23,7 +23,7 @@ export default function ViewRasiForm() {
     initialDuration === "daily" ? today : ""
   );  // AUTO-SET today for daily
 
-   
+
   const [weekStart, setWeekStart] = useState("");
   const [weekEnd, setWeekEnd] = useState("");
   const [data, setData] = useState([]);
@@ -40,7 +40,7 @@ export default function ViewRasiForm() {
 
   async function fetchRasi(type, dateValue) {
     if (!dateValue) return;
-    
+
     setLoading(true);
     setError("");
     setData([]);
@@ -97,10 +97,13 @@ export default function ViewRasiForm() {
         .filter((item) => item.data.length > 0);
 
       if (filteredData.length === 0) {
+        setData([]); // CLEAR DISPLAY
         setError("No data found for " + selectedRasi);
       } else {
+        setError("");  // ensure previous errors disappear
         setData(filteredData);
       }
+
     } catch (err) {
       setError("Something went wrong while fetching.");
       console.error(err);
@@ -134,8 +137,8 @@ export default function ViewRasiForm() {
     <div className="rasi-containers">
       <div className="star-bg"></div>
       <div className="wrap-container">
-        <h3>{selectedRasi} ராசி</h3>
-       
+        <h3 className="h3">{selectedRasi} ராசி</h3>
+
         <select value={duration} onChange={handleDurationChange}>
           {["daily", "weekly", "monthly", "yearly"].map((type) => (
             <option key={type} value={type}>
@@ -148,7 +151,7 @@ export default function ViewRasiForm() {
         {duration === "weekly" ? (
           <div className="block">
 
-           
+
             <input
               type="date"
               value={weekStart}
@@ -159,7 +162,7 @@ export default function ViewRasiForm() {
               className="input-date"
             />
 
-           
+
             <input
               type="date"
               value={weekEnd}
@@ -206,7 +209,9 @@ export default function ViewRasiForm() {
       </div>
 
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {!loading && error && (
+        <p style={{ color: "red" }}>{error}</p>
+      )}
 
 
       {data.map((item, idx) => (

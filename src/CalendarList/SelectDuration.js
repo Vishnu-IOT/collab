@@ -7,7 +7,9 @@ export default function SelectDuration() {
   function selectDuration(type) {
     navigate(`/rasi-list?duration=${type}`);
   }
- 
+ function selectBanner(){
+  navigate('/banner')
+ }
 
   return (
     <div className="stars">
@@ -24,7 +26,12 @@ export default function SelectDuration() {
         </div>
       </div>
 
-      
+      <div className="Banner">
+        <div className="wrap-page">
+          <h2 className="heading-3">விளம்பர பலகை</h2>
+          <button onClick={()=> selectBanner()}>Banner</button>
+        </div>
+      </div>
 
     </div>
   );
