@@ -1,17 +1,22 @@
-import React, { useState } from 'react'
-import BasicDateCalendar from './date'
+import React, { useState } from 'react';
+import BasicDateCalendar from './date';
 import '../styles/durationstyle.css';
-import rasiname from '../json/rasipalan.json'
-// import star from '../json/star.json'
+import rasiname from '../json/rasipalan.json';
+// import star from '../json/star.json';
 import AntDatePicker from './antdatepicker';
-// import Error from './error';
+import Preview from './preview';
+import Errors from './errors';
+import CircularIndeterminate from './loader';
 
 const Duration = () => {
-    const [values, setValue] = useState();
+    const [values, setValue] = useState(null);
     const [dur, setdur] = useState("Daily");
     const [selectobj, setSelectedObj] = useState("");
     const [object, setobject] = useState("மேஷம்");
-    // const [error, seterror] = useState([]);
+    const [predata, setpredata] = useState(null);
+    const [databool, setdatabool] = useState(false);
+    const [loading, setloading] = useState(false);
+    const [error, seterror] = useState(null);
     // const [nat, setnat] = useState();
     // const [det, setdet] = useState("");
 
@@ -44,20 +49,36 @@ const Duration = () => {
     //     }
     // }, [natcha, det]);
 
-
-    const xchange = async (e) => {
-
+    const formdatas = (e) => {
         e.preventDefault();
+        const data = {
+            "duration": dur,
+            "date": values,
+            "rasi": e.target.rasi.value,
+            "summary": e.target.summary.value,
+            "luckyColor": e.target.lucky_color.value,
+            "luckyNumber": e.target.luckyNumbers.value,
+            "luckyDirection": e.target.lucky_dr.value,
+            "imageFile": e.target.image.files[0],      // file
+            "imageURL": e.target.image.files[0] ? URL.createObjectURL(e.target.image.files[0]) : null, // preview image
+        };
+        setpredata(data);
+        setdatabool(true);
+
+    }
+
+    const xchange = async () => {
+        setloading(true);
         const formdata = new FormData();
         formdata.append("date", values)
         formdata.append("rasiId", selectobj)
-        formdata.append("name", e.target.rasi.value)
-        formdata.append("summary", e.target.summary.value)
-        formdata.append("luckyNumbers", e.target.luckyNumbers.value)
-        formdata.append("lucky_dr", e.target.lucky_dr.value)
-        formdata.append("lucky_color", e.target.lucky_color.value)
+        formdata.append("name", predata.rasi)
+        formdata.append("summary", predata.summary)
+        formdata.append("luckyNumbers", predata.luckyNumber)
+        formdata.append("lucky_dr", predata.luckyDirection)
+        formdata.append("lucky_color", predata.luckyColor)
         formdata.append("duration", dur)
-        formdata.append("image", e.target.image.files[0])
+        formdata.append("image", predata.imageFile)
         // formdata.append("natchathiram",nat)
 
         console.log(formdata)
@@ -67,13 +88,21 @@ const Duration = () => {
             body: formdata
         })
             .then((res) => res.json())
-            .then((data) => { if (!data.success) { alert(data.message) }; console.log(data) });
+            .then((data) => {
+                if (!data.success) {
+                    seterror(data.message)
+                }
+                seterror(data.message);
+                setTimeout(window.location.reload(),2000);
+                setloading(false);
+                console.log(data)
+            });
     }
 
 
     return (
         <div className='main'>
-            <form className='form' onSubmit={xchange} encType="multipart/form-data">
+            <form className='form' onSubmit={formdatas} encType="multipart/form-data">
                 <h1>Upload-Form</h1>
 
                 <label>கால அளவைத் தேர்வு செய்க:</label>
@@ -90,9 +119,7 @@ const Duration = () => {
                 {dur === "Weekly" &&
                     <div className="custom-week-picker">
                         <AntDatePicker onDate={setValue} />
-                    </div>
-
-                }
+                    </div>}
                 {dur === "Monthly" &&
                     <BasicDateCalendar onformat={"MMM-YYYY"} onDate={setValue} onview={["year", "month"]} onopen={"month"} />}
                 {dur === "Yearly" &&
@@ -107,6 +134,7 @@ const Duration = () => {
                         </option>
                     ))}
                 </select>
+
                 {/* {
                     natcha.map((key, index) => {
                         return (
@@ -130,8 +158,16 @@ const Duration = () => {
                 <label>Upload Image:</label>
                 <input className='design' type='file' name='image' accept="image/*" placeholder='Upload Image only' required />
 
-                <button className='btn'>Upload</button>
+                <button className='btn' disabled={loading}>{
+                    loading ? <CircularIndeterminate /> : "Upload"
+                }</button>
             </form>
+            {
+                databool === true && <Preview onbool={setdatabool} onupload={xchange} ondata={predata} />
+            }
+            {
+                error && <Errors onbool={seterror} onerror={error} />
+            }
         </div >
     )
 }
